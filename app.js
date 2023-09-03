@@ -1,22 +1,30 @@
+// Initialize a variable to store the current calculation
+let calculation = '';
 
-var date = new Date("2023-12-31T23:59:59").getTime();
+// Function to update the display
+function updateDisplay() {
+    document.getElementById('display').value = calculation;
+}
 
-var countdownInterval = setInterval(countdown, 1000);
+// Function to append characters to the calculation
+function appendToDisplay(char) {
+    calculation += char;
+    updateDisplay();
+}
 
-function countdown() {
-    var currentDate = new Date().getTime();
-    var differTime = date - currentDate;
+// Function to clear the display
+function clearDisplay() {
+    calculation = '';
+    updateDisplay();
+}
 
-    if (differTime <= 0) {
-        clearInterval(countdownInterval);
-        document.getElementById("reverseStopwatch").innerHTML = "Countdown expired!";
-    } else {
-        var day = Math.floor(differTime / (1000 * 60 * 60 * 24));
-        var hours = Math.floor((differTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        var minutes = Math.floor((differTime % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((differTime % (1000 * 60)) / 1000);
-
-        const countdownText = `${day}d ${hours}h ${minutes}min ${seconds}sec`;
-        document.getElementById("reverseStopwatch").innerHTML = countdownText;
+// Function to perform the calculation
+function calculate() {
+    try {
+        calculation = eval(calculation);
+        updateDisplay();
+    } catch (error) {
+        calculation = 'Error';
+        updateDisplay();
     }
 }
